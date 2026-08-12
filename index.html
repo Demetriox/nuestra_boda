@@ -26,7 +26,6 @@
   html{
     scroll-behavior:smooth;
     height:100%;
-    scroll-snap-type:y proximity;
     overflow-y:scroll;
     overflow-x:hidden;
   }
@@ -135,7 +134,6 @@
     display:flex;
     flex-direction:column;
     justify-content:center;
-    scroll-snap-align:start;
   }
   .oval-oro{
     position:relative;
@@ -244,7 +242,6 @@
   .ceremonia{
     padding:clamp(56px, 13vw, 80px) 30px clamp(60px, 14vw, 88px);
     text-align:center;
-    scroll-snap-stop:always;
   }
   .esquinas{ position:absolute; inset:14px; pointer-events:none; }
   .esquinas svg{ position:absolute; width:74px; height:74px; opacity:.95; }
@@ -318,6 +315,10 @@
   .detalles-top{
     padding:clamp(48px, 11vw, 68px) 26px clamp(48px, 11vw, 68px);
     text-align:center;
+    min-height:100dvh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
   }
   .insignia{ position:relative; width:min(340px, 88%); margin:0 auto; }
   .insignia svg{ width:100%; height:auto; display:block; filter:drop-shadow(0 12px 26px rgba(70,10,25,.28)); }
@@ -405,7 +406,6 @@
   .confirmar{
     padding:clamp(52px, 12vw, 72px) 32px clamp(64px, 14vw, 90px);
     text-align:center;
-    scroll-snap-align:start;
     min-height:100dvh;
     display:flex;
     flex-direction:column;
@@ -460,6 +460,34 @@
     font-size:clamp(18px, 4.8vw, 22px);
     margin-top:clamp(24px, 6vw, 34px);
   }
+
+  /* ── Floating music button ── */
+  .boton-musica{
+    position:fixed;
+    bottom:1.6rem;
+    right:1.4rem;
+    z-index:50;
+    width:46px;
+    height:46px;
+    border-radius:50%;
+    border:1.5px solid rgba(179,137,60,.55);
+    background:rgba(64,0,14,.72);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    color:var(--oro-claro);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    transition:border-color .3s, background .3s, transform .2s;
+    box-shadow:0 4px 20px rgba(0,0,0,.4);
+  }
+  .boton-musica:hover{ border-color:var(--oro-claro); transform:scale(1.08); }
+  .boton-musica svg{ width:18px; height:18px; }
+  .boton-musica .icono-nota{ display:block; }
+  .boton-musica .icono-pausa{ display:none; }
+  .boton-musica.sonando .icono-nota{ display:none; }
+  .boton-musica.sonando .icono-pausa{ display:block; }
 </style>
 </head>
 <body>
