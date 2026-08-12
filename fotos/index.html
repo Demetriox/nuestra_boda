@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fotos — Demetrio &amp; Princesa · 28.Nov.26</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --vino:      #4d0011;
+    --vino-prof: #40000e;
+    --oro:       #b3893c;
+    --oro-claro: #d4af6a;
+    --marfil:    #f6f1e7;
+    --tinta:     #4a0b1c;
+    --guinda:    #77111f;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--vino-prof);
+    background-image:
+      radial-gradient(ellipse at 20% 10%, #7a223740 0%, transparent 55%),
+      radial-gradient(ellipse at 80% 90%, #7a223730 0%, transparent 55%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem 1.5rem 5rem;
+    font-family: 'Jost', sans-serif;
+    color: var(--marfil);
+  }
+
+  .ornament {
+    color: var(--oro);
+    font-size: 1.4rem;
+    letter-spacing: 0.4em;
+    margin-bottom: 0.5rem;
+    opacity: 0.7;
+  }
+
+  h1 {
+    font-family: 'Parisienne', cursive;
+    font-size: clamp(2.8rem, 8vw, 4.5rem);
+    color: var(--oro-claro);
+    text-align: center;
+    line-height: 1.1;
+    margin-bottom: 0.3rem;
+    text-shadow: 0 2px 20px #00000060;
+  }
+
+  .subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--oro);
+    opacity: 0.8;
+    margin-bottom: 2.5rem;
+    text-align: center;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    max-width: 420px;
+    margin-bottom: 2.5rem;
+  }
+  .divider span { flex: 1; height: 1px; background: var(--oro); opacity: 0.35; }
+  .divider i { color: var(--oro); opacity: 0.6; font-size: 0.7rem; }
+
+  .upload-area {
+    width: 100%;
+    max-width: 520px;
+    background: rgba(255,255,255,0.04);
+    border: 1.5px dashed rgba(179,137,60,0.45);
+    border-radius: 12px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.3s, background 0.3s;
+    position: relative;
+  }
+  .upload-area:hover, .upload-area.drag-over {
+    border-color: var(--oro-claro);
+    background: rgba(255,255,255,0.07);
+  }
+  .upload-area input[type="file"] {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .upload-icon {
+    font-size: 2.8rem;
+    margin-bottom: 1rem;
+    opacity: 0.55;
+  }
+
+  .upload-label {
+    font-size: 1.05rem;
+    font-weight: 300;
+    color: var(--marfil);
+    opacity: 0.85;
+    margin-bottom: 0.4rem;
+  }
+
+  .upload-hint {
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    color: var(--oro);
+    opacity: 0.6;
+    text-transform: uppercase;
+  }
+
+  .name-input-wrap {
+    width: 100%;
+    max-width: 520px;
+    margin-top: 1.2rem;
+  }
+
+  .name-input-wrap input {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(179,137,60,0.3);
+    border-radius: 8px;
+    padding: 0.85rem 1.2rem;
+    color: var(--marfil);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 300;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+  .name-input-wrap input::placeholder { color: rgba(246,241,231,0.35); }
+  .name-input-wrap input:focus { border-color: var(--oro-claro); }
+
+  .preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 0.6rem;
+    width: 100%;
+    max-width: 520px;
+    margin-top: 1rem;
+  }
+
+  .preview-item {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 6px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.05);
+  }
+  .preview-item img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .preview-item .remove-btn {
+    position: absolute;
+    top: 3px; right: 3px;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: rgba(77,0,17,0.85);
+    border: none;
+    color: #fff;
+    font-size: 0.65rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    line-height: 1;
+  }
+  .preview-item .progress-bar {
+    position: absolute;
+    bottom: 0; left: 0;
+    height: 3px;
+    background: var(--oro-claro);
+    width: 0%;
+    transition: width 0.2s;
+  }
+  .preview-item .check {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(77,0,17,0.55);
+    font-size: 1.5rem;
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .preview-item.done .check { opacity: 1; }
+  .preview-item.done .progress-bar { width: 100%; background: #6fcf97; }
+
+  .btn-upload {
+    margin-top: 1.5rem;
+    padding: 0.9rem 3rem;
+    background: transparent;
+    border: 1.5px solid var(--oro);
+    border-radius: 50px;
+    color: var(--oro-claro);
+    font-family: 'Jost', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+  }
+  .btn-upload:hover:not(:disabled) {
+    background: var(--oro);
+    color: var(--vino-prof);
+  }
+  .btn-upload:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .status-msg {
+    margin-top: 1rem;
+    font-size: 0.88rem;
+    letter-spacing: 0.05em;
+    text-align: center;
+    min-height: 1.4em;
+    color: var(--oro-claro);
+  }
+  .status-msg.error { color: #e07070; }
+  .status-msg.success { color: #6fcf97; }
+
+  .gallery-section {
+    width: 100%;
+    max-width: 700px;
+    margin-top: 4rem;
+  }
+
+  .gallery-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--oro);
+    text-align: center;
+    margin-bottom: 1.5rem;
+    opacity: 0.8;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 0.7rem;
+  }
+
+  .gallery-item {
+    aspect-ratio: 1;
+    border-radius: 8px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.04);
+  }
+  .gallery-item img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s;
+    cursor: pointer;
+  }
+  .gallery-item img:hover { transform: scale(1.04); }
+
+  .gallery-empty {
+    text-align: center;
+    font-size: 0.85rem;
+    color: rgba(246,241,231,0.3);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 2rem 0;
+  }
+
+  /* lightbox */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.88);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img {
+    max-width: 92vw;
+    max-height: 88vh;
+    border-radius: 6px;
+    box-shadow: 0 8px 60px #00000080;
+  }
+  .lightbox-close {
+    position: absolute;
+    top: 1.2rem; right: 1.5rem;
+    font-size: 2rem;
+    color: #fff;
+    cursor: pointer;
+    opacity: 0.7;
+    background: none;
+    border: none;
+    line-height: 1;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 2.5rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--oro);
+    opacity: 0.55;
+    text-decoration: none;
+    transition: opacity 0.2s;
+    align-self: flex-start;
+  }
+  .back-link:hover { opacity: 1; }
+</style>
+</head>
+<body>
+
+<a class="back-link" href="/">&larr; Invitacion</a>
+
+<div class="ornament">&#10022; &#10022; &#10022;</div>
+<h1>Comparte tus Fotos</h1>
+<p class="subtitle">Demetrio &amp; Princesa &nbsp;&middot;&nbsp; 28 . Nov . 26</p>
+
+<div class="divider"><span></span><i>&#9670;</i><span></span></div>
+
+<div class="upload-area" id="dropZone">
+  <input type="file" id="fileInput" accept="image/*,video/*" multiple>
+  <div class="upload-icon">&#128247;</div>
+  <p class="upload-label">Arrastra tus fotos aqui</p>
+  <p class="upload-hint">o toca para seleccionar &nbsp;&middot;&nbsp; jpg, png, mov, mp4</p>
+</div>
+
+<div class="name-input-wrap">
+  <input type="text" id="guestName" placeholder="Tu nombre (opcional)" maxlength="60">
+</div>
+
+<div class="preview-grid" id="previewGrid"></div>
+
+<button class="btn-upload" id="btnUpload" disabled>Subir Fotos</button>
+<p class="status-msg" id="statusMsg"></p>
+
+<div class="gallery-section">
+  <p class="gallery-title">Galeria de Invitados</p>
+  <div class="gallery-grid" id="galleryGrid">
+    <p class="gallery-empty" id="galleryEmpty">Las fotos apareceran aqui</p>
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose">&times;</button>
+  <img src="" alt="" id="lightboxImg">
+</div>
+
+<!-- Firebase -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getStorage, ref, uploadBytesResumable, getDownloadURL, listAll } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBtSzynjEkq428M9mA_iu2aKYohF8n5jFo",
+    authDomain: "lost-game-6cd3f.firebaseapp.com",
+    projectId: "lost-game-6cd3f",
+    storageBucket: "lost-game-6cd3f.firebasestorage.app",
+    messagingSenderId: "910385085237",
+    appId: "1:910385085237:web:20c36926fddca50c686a7c",
+    measurementId: "G-F82T9WVPFK"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const storage = getStorage(app);
+  const FOLDER = "boda-fotos";
+
+  let selectedFiles = [];
+
+  const dropZone   = document.getElementById("dropZone");
+  const fileInput  = document.getElementById("fileInput");
+  const previewGrid= document.getElementById("previewGrid");
+  const btnUpload  = document.getElementById("btnUpload");
+  const statusMsg  = document.getElementById("statusMsg");
+  const guestName  = document.getElementById("guestName");
+  const galleryGrid= document.getElementById("galleryGrid");
+  const galleryEmpty=document.getElementById("galleryEmpty");
+  const lightbox   = document.getElementById("lightbox");
+  const lightboxImg= document.getElementById("lightboxImg");
+  const lightboxClose=document.getElementById("lightboxClose");
+
+  // Drag & drop
+  dropZone.addEventListener("dragover", e => { e.preventDefault(); dropZone.classList.add("drag-over"); });
+  dropZone.addEventListener("dragleave", () => dropZone.classList.remove("drag-over"));
+  dropZone.addEventListener("drop", e => {
+    e.preventDefault();
+    dropZone.classList.remove("drag-over");
+    addFiles([...e.dataTransfer.files]);
+  });
+  fileInput.addEventListener("change", () => addFiles([...fileInput.files]));
+
+  function addFiles(files) {
+    files.forEach(f => {
+      if (!f.type.startsWith("image/") && !f.type.startsWith("video/")) return;
+      selectedFiles.push(f);
+      renderPreview(f, selectedFiles.length - 1);
+    });
+    btnUpload.disabled = selectedFiles.length === 0;
+  }
+
+  function renderPreview(file, idx) {
+    const item = document.createElement("div");
+    item.className = "preview-item";
+    item.id = `prev-${idx}`;
+
+    if (file.type.startsWith("image/")) {
+      const img = document.createElement("img");
+      img.src = URL.createObjectURL(file);
+      item.appendChild(img);
+    } else {
+      const icon = document.createElement("div");
+      icon.style.cssText = "display:flex;align-items:center;justify-content:center;height:100%;font-size:2rem;opacity:0.5";
+      icon.textContent = "🎬";
+      item.appendChild(icon);
+    }
+
+    const bar = document.createElement("div");
+    bar.className = "progress-bar";
+    item.appendChild(bar);
+
+    const check = document.createElement("div");
+    check.className = "check";
+    check.textContent = "✓";
+    item.appendChild(check);
+
+    const rm = document.createElement("button");
+    rm.className = "remove-btn";
+    rm.textContent = "✕";
+    rm.onclick = () => { selectedFiles[idx] = null; item.remove(); btnUpload.disabled = selectedFiles.filter(Boolean).length === 0; };
+    item.appendChild(rm);
+
+    previewGrid.appendChild(item);
+  }
+
+  btnUpload.addEventListener("click", async () => {
+    const files = selectedFiles.filter(Boolean);
+    if (!files.length) return;
+
+    btnUpload.disabled = true;
+    statusMsg.className = "status-msg";
+    statusMsg.textContent = "Subiendo...";
+
+    const name = guestName.value.trim() || "invitado";
+    const ts = Date.now();
+    let done = 0;
+
+    const uploads = files.map((file, i) => new Promise((resolve, reject) => {
+      const ext = file.name.split(".").pop();
+      const path = `${FOLDER}/${name}_${ts}_${i}.${ext}`;
+      const storageRef = ref(storage, path);
+      const task = uploadBytesResumable(storageRef, file);
+      const itemEl = document.getElementById(`prev-${selectedFiles.indexOf(file)}`);
+      const bar = itemEl ? itemEl.querySelector(".progress-bar") : null;
+
+      task.on("state_changed",
+        snap => { if (bar) bar.style.width = (snap.bytesTransferred / snap.totalBytes * 100) + "%"; },
+        reject,
+        () => { if (itemEl) itemEl.classList.add("done"); done++; resolve(); }
+      );
+    }));
+
+    try {
+      await Promise.all(uploads);
+      statusMsg.className = "status-msg success";
+      statusMsg.textContent = `${done} foto${done !== 1 ? "s" : ""} subida${done !== 1 ? "s" : ""}. Gracias!`;
+      selectedFiles = [];
+      setTimeout(() => { previewGrid.innerHTML = ""; statusMsg.textContent = ""; loadGallery(); }, 2500);
+    } catch (e) {
+      statusMsg.className = "status-msg error";
+      statusMsg.textContent = "Error al subir. Intenta de nuevo.";
+      btnUpload.disabled = false;
+    }
+  });
+
+  // Gallery
+  async function loadGallery() {
+    try {
+      const folderRef = ref(storage, FOLDER);
+      const result = await listAll(folderRef);
+      if (result.items.length === 0) { galleryEmpty.style.display = "block"; return; }
+      galleryEmpty.style.display = "none";
+      galleryGrid.innerHTML = "";
+
+      const urls = await Promise.all(result.items.map(item => getDownloadURL(item)));
+      urls.forEach(url => {
+        const wrap = document.createElement("div");
+        wrap.className = "gallery-item";
+        const img = document.createElement("img");
+        img.src = url;
+        img.loading = "lazy";
+        img.onclick = () => { lightboxImg.src = url; lightbox.classList.add("open"); };
+        wrap.appendChild(img);
+        galleryGrid.appendChild(wrap);
+      });
+    } catch (e) {
+      // Storage rules may block listing — silently skip gallery
+    }
+  }
+
+  lightboxClose.onclick = () => lightbox.classList.remove("open");
+  lightbox.addEventListener("click", e => { if (e.target === lightbox) lightbox.classList.remove("open"); });
+
+  loadGallery();
+</script>
+
+</body>
+</html>
