@@ -23,7 +23,13 @@
   }
 
   *{ margin:0; padding:0; box-sizing:border-box; }
-  html{ scroll-behavior:smooth; height:100%; }
+  html{
+    scroll-behavior:smooth;
+    height:100%;
+    scroll-snap-type:y mandatory;
+    overflow-y:scroll;
+    overflow-x:hidden;
+  }
   @media (prefers-reduced-motion: reduce){
     html{ scroll-behavior:auto; }
     *, *::before, *::after{ animation:none !important; transition:none !important; }
@@ -33,8 +39,6 @@
     font-family:'Jost', sans-serif;
     background:#2b0009;
     color:var(--marfil);
-    height:100%;
-    overflow:hidden;
   }
 
   /* Tira continua tipo historia */
@@ -42,13 +46,7 @@
     max-width:480px;
     margin:0 auto;
     box-shadow:0 0 80px rgba(0,0,0,.45);
-    overflow-y:scroll;
-    overflow-x:hidden;
-    height:100dvh;
-    scroll-snap-type:y mandatory;
-    scrollbar-width:none;
   }
-  .tira::-webkit-scrollbar{display:none;}
 
   /* ---------- fondos ---------- */
   .toile{
