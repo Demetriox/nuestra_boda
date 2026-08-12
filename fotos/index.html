@@ -3,523 +3,937 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fotos — Demetrio &amp; Princesa · 28.Nov.26</title>
+<title>Photo Challenge — Demetrio &amp; Princesa · 28.Nov.26</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Ephesis&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --vino:      #4d0011;
-    --vino-prof: #40000e;
-    --oro:       #b3893c;
-    --oro-claro: #d4af6a;
-    --marfil:    #f6f1e7;
-    --tinta:     #4a0b1c;
-    --guinda:    #77111f;
-  }
+:root{
+  --vino:       #4d0011;
+  --vino-prof:  #40000e;
+  --vino-linea: #7a2237;
+  --oro:        #b3893c;
+  --oro-claro:  #d4af6a;
+  --marfil:     #f6f1e7;
+  --tinta:      #4a0b1c;
+  --guinda:     #77111f;
+  --negro:      #131313;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{animation:none!important;transition:none!important;}
+}
+body{
+  font-family:'Jost',sans-serif;
+  background:#2b0009;
+  color:var(--marfil);
+  min-height:100vh;
+}
+.tira{
+  max-width:480px;
+  margin:0 auto;
+  box-shadow:0 0 80px rgba(0,0,0,.45);
+}
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+/* ── Divider ─────────────────────────── */
+.divider{display:flex;align-items:center;gap:.8rem;padding:0 2rem;}
+.div-line{flex:1;height:1px;background:var(--oro);opacity:.28;}
+.div-gem{width:6px;height:6px;background:var(--oro);opacity:.5;transform:rotate(45deg);flex-shrink:0;}
 
-  body {
-    background-color: var(--vino-prof);
-    background-image:
-      radial-gradient(ellipse at 20% 10%, #7a223740 0%, transparent 55%),
-      radial-gradient(ellipse at 80% 90%, #7a223730 0%, transparent 55%);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 3rem 1.5rem 5rem;
-    font-family: 'Jost', sans-serif;
-    color: var(--marfil);
-  }
+/* ── Login screen ────────────────────── */
+#screen-login{
+  background:var(--vino-prof);
+  background-image:
+    radial-gradient(ellipse at 30% 0%,#7a223750 0%,transparent 60%),
+    radial-gradient(ellipse at 70% 100%,#7a223730 0%,transparent 55%);
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:3rem 2rem;
+  text-align:center;
+  gap:0;
+}
+.login-ornament{
+  font-size:.9rem;letter-spacing:.5em;color:var(--oro);opacity:.45;margin-bottom:.8rem;
+}
+.login-title{
+  font-family:'Parisienne',cursive;
+  font-size:clamp(2.8rem,10vw,4.2rem);
+  color:var(--oro-claro);
+  line-height:1.1;
+  text-shadow:0 2px 24px #00000070;
+  margin-bottom:.3rem;
+}
+.login-sub{
+  font-family:'Cormorant Garamond',serif;
+  font-size:.82rem;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  color:var(--oro);
+  opacity:.65;
+  margin-bottom:2.4rem;
+}
+.login-card{
+  width:100%;
+  max-width:320px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(179,137,60,.22);
+  border-radius:14px;
+  padding:2rem 1.8rem 1.8rem;
+  display:flex;
+  flex-direction:column;
+  gap:.9rem;
+}
+.login-card p{
+  font-family:'Cormorant Garamond',serif;
+  font-size:.95rem;
+  letter-spacing:.06em;
+  color:var(--marfil);
+  opacity:.7;
+  margin-bottom:.2rem;
+}
+.field{
+  width:100%;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(179,137,60,.28);
+  border-radius:8px;
+  padding:.8rem 1.1rem;
+  color:var(--marfil);
+  font-family:'Jost',sans-serif;
+  font-size:.95rem;
+  font-weight:300;
+  outline:none;
+  transition:border-color .3s;
+}
+.field::placeholder{color:rgba(246,241,231,.3);}
+.field:focus{border-color:var(--oro-claro);}
+.btn-pill{
+  width:100%;
+  padding:.85rem 1rem;
+  background:transparent;
+  border:1.5px solid var(--oro);
+  border-radius:50px;
+  color:var(--oro-claro);
+  font-family:'Jost',sans-serif;
+  font-size:.78rem;
+  font-weight:500;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:background .3s,color .3s;
+}
+.btn-pill:hover:not(:disabled){background:var(--oro);color:var(--vino-prof);}
+.btn-pill:disabled{opacity:.35;cursor:not-allowed;}
+.login-err{
+  font-size:.78rem;
+  color:#e07070;
+  letter-spacing:.04em;
+  min-height:1.1em;
+  text-align:center;
+}
 
-  .ornament {
-    color: var(--oro);
-    font-size: 1.4rem;
-    letter-spacing: 0.4em;
-    margin-bottom: 0.5rem;
-    opacity: 0.7;
-  }
+/* ── Main app ────────────────────────── */
+#screen-app{display:none;}
 
-  h1 {
-    font-family: 'Parisienne', cursive;
-    font-size: clamp(2.8rem, 8vw, 4.5rem);
-    color: var(--oro-claro);
-    text-align: center;
-    line-height: 1.1;
-    margin-bottom: 0.3rem;
-    text-shadow: 0 2px 20px #00000060;
-  }
+/* Header */
+.sec-header{
+  background:var(--vino-prof);
+  background-image:
+    radial-gradient(ellipse at 30% 0%,#7a223750 0%,transparent 60%),
+    radial-gradient(ellipse at 70% 100%,#7a223730 0%,transparent 55%);
+  padding:2.8rem 2rem 2.2rem;
+  text-align:center;
+}
+.back-link{
+  display:inline-block;
+  font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--oro);opacity:.5;text-decoration:none;
+  margin-bottom:1.4rem;transition:opacity .2s;
+}
+.back-link:hover{opacity:1;}
+.hdr-ornament{font-size:.9rem;letter-spacing:.5em;color:var(--oro);opacity:.45;margin-bottom:.6rem;}
+.hdr-title{
+  font-family:'Parisienne',cursive;
+  font-size:clamp(2.4rem,9vw,3.6rem);
+  color:var(--oro-claro);
+  line-height:1.1;
+  text-shadow:0 2px 24px #00000070;
+  margin-bottom:.3rem;
+}
+.hdr-sub{
+  font-family:'Cormorant Garamond',serif;
+  font-size:.8rem;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--oro);opacity:.65;
+  margin-bottom:1.2rem;
+}
 
-  .subtitle {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.05rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--oro);
-    opacity: 0.8;
-    margin-bottom: 2.5rem;
-    text-align: center;
-  }
+/* Score bar */
+.score-bar{
+  display:flex;align-items:center;justify-content:center;gap:1.2rem;
+  margin-top:1rem;
+}
+.score-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1rem;letter-spacing:.1em;
+  color:var(--marfil);opacity:.75;
+  font-style:italic;
+}
+.score-pts{
+  font-family:'Jost',sans-serif;
+  font-size:1.6rem;font-weight:500;
+  color:var(--oro-claro);
+}
+.score-label{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--oro);opacity:.5;}
+.score-block{text-align:center;}
 
-  .divider {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    width: 100%;
-    max-width: 420px;
-    margin-bottom: 2.5rem;
-  }
-  .divider span { flex: 1; height: 1px; background: var(--oro); opacity: 0.35; }
-  .divider i { color: var(--oro); opacity: 0.6; font-size: 0.7rem; }
+/* Progress ring */
+.progress-wrap{position:relative;width:54px;height:54px;}
+.progress-wrap svg{transform:rotate(-90deg);}
+.ring-bg{fill:none;stroke:rgba(179,137,60,.15);stroke-width:4;}
+.ring-fill{fill:none;stroke:var(--oro);stroke-width:4;stroke-linecap:round;transition:stroke-dashoffset .6s ease;}
+.ring-text{
+  position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  font-size:.55rem;letter-spacing:.08em;text-transform:uppercase;color:var(--oro);opacity:.75;
+}
 
-  .upload-area {
-    width: 100%;
-    max-width: 520px;
-    background: rgba(255,255,255,0.04);
-    border: 1.5px dashed rgba(179,137,60,0.45);
-    border-radius: 12px;
-    padding: 2.5rem 2rem;
-    text-align: center;
-    cursor: pointer;
-    transition: border-color 0.3s, background 0.3s;
-    position: relative;
-  }
-  .upload-area:hover, .upload-area.drag-over {
-    border-color: var(--oro-claro);
-    background: rgba(255,255,255,0.07);
-  }
-  .upload-area input[type="file"] {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    cursor: pointer;
-  }
+/* Challenge grid */
+.sec-challenges{background:#380008;padding:1.8rem 1.2rem 2.4rem;}
+.sec-label{
+  font-family:'Cormorant Garamond',serif;
+  font-size:.78rem;letter-spacing:.32em;text-transform:uppercase;
+  color:var(--oro);opacity:.6;text-align:center;margin-bottom:1.4rem;
+}
+.challenge-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:.7rem;
+}
+.challenge-card{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(179,137,60,.18);
+  border-radius:10px;
+  padding:1.1rem .9rem .9rem;
+  text-align:center;
+  cursor:pointer;
+  transition:border-color .3s,background .3s,transform .15s;
+  position:relative;
+  overflow:hidden;
+}
+.challenge-card:hover:not(.done){
+  border-color:rgba(179,137,60,.45);
+  background:rgba(255,255,255,.07);
+  transform:translateY(-2px);
+}
+.challenge-card.done{
+  border-color:rgba(179,137,60,.55);
+  background:rgba(179,137,60,.1);
+  cursor:default;
+}
+.challenge-card.done::after{
+  content:'';
+  position:absolute;inset:0;
+  background:rgba(64,0,14,.18);
+}
+.ch-emoji{font-size:2.1rem;margin-bottom:.5rem;display:block;}
+.ch-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:.92rem;font-weight:600;
+  color:var(--marfil);
+  line-height:1.2;margin-bottom:.3rem;
+}
+.ch-pts{
+  font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--oro);opacity:.7;
+}
+.ch-check{
+  position:absolute;top:.5rem;right:.6rem;
+  width:22px;height:22px;
+  background:var(--oro);
+  border-radius:50%;
+  display:none;align-items:center;justify-content:center;
+  font-size:.75rem;color:var(--vino-prof);font-weight:700;
+  z-index:2;
+}
+.challenge-card.done .ch-check{display:flex;}
+.ch-photo-thumb{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  object-fit:cover;
+  opacity:.22;
+  z-index:1;
+}
 
-  .upload-icon {
-    font-size: 2.8rem;
-    margin-bottom: 1rem;
-    opacity: 0.55;
-  }
+/* Upload overlay (modal) */
+.modal-backdrop{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.82);
+  z-index:100;
+  align-items:flex-end;justify-content:center;
+}
+.modal-backdrop.open{display:flex;}
+.modal-sheet{
+  background:var(--vino-prof);
+  border:1px solid rgba(179,137,60,.22);
+  border-radius:18px 18px 0 0;
+  width:100%;max-width:480px;
+  padding:2rem 1.8rem 2.4rem;
+}
+.modal-drag{
+  width:40px;height:4px;
+  background:rgba(179,137,60,.3);
+  border-radius:2px;
+  margin:0 auto 1.5rem;
+}
+.modal-emoji{font-size:2.4rem;text-align:center;display:block;margin-bottom:.5rem;}
+.modal-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.2rem;font-weight:600;
+  color:var(--oro-claro);text-align:center;
+  margin-bottom:.2rem;
+}
+.modal-pts{
+  font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--oro);opacity:.6;text-align:center;margin-bottom:1.4rem;
+}
+.drop-zone{
+  position:relative;
+  border:1.5px dashed rgba(179,137,60,.38);
+  border-radius:10px;
+  padding:1.8rem 1rem;
+  text-align:center;
+  cursor:pointer;
+  transition:border-color .3s,background .3s;
+  background:rgba(255,255,255,.03);
+  margin-bottom:1rem;
+}
+.drop-zone:hover,.drop-zone.drag-over{border-color:var(--oro-claro);background:rgba(255,255,255,.06);}
+.drop-zone input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;}
+.drop-icon{font-size:2rem;opacity:.4;display:block;margin-bottom:.4rem;}
+.drop-text{font-size:.88rem;font-weight:300;color:var(--marfil);opacity:.7;margin-bottom:.2rem;}
+.drop-hint{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--oro);opacity:.45;}
+.preview-img{
+  width:100%;max-height:180px;object-fit:cover;
+  border-radius:8px;margin-bottom:.8rem;display:none;
+}
+.upload-progress{
+  height:3px;background:rgba(179,137,60,.2);border-radius:2px;
+  margin-bottom:.8rem;display:none;
+}
+.upload-progress-fill{height:100%;background:var(--oro);border-radius:2px;width:0%;transition:width .2s;}
+.modal-status{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;font-size:.88rem;
+  text-align:center;min-height:1.2em;color:var(--oro-claro);
+  margin-bottom:.5rem;
+}
+.modal-status.error{color:#e07070;}
+.modal-status.success{color:#8dd5a8;}
+.modal-btns{display:flex;gap:.8rem;}
+.btn-cancel{
+  flex:1;padding:.8rem;background:transparent;
+  border:1px solid rgba(179,137,60,.3);border-radius:50px;
+  color:var(--marfil);opacity:.6;
+  font-family:'Jost',sans-serif;font-size:.75rem;
+  letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:opacity .2s;
+}
+.btn-cancel:hover{opacity:1;}
 
-  .upload-label {
-    font-size: 1.05rem;
-    font-weight: 300;
-    color: var(--marfil);
-    opacity: 0.85;
-    margin-bottom: 0.4rem;
-  }
+/* Leaderboard */
+.sec-board{background:var(--vino-prof);padding:1.8rem 1.5rem 2.4rem;}
+.board-list{display:flex;flex-direction:column;gap:.6rem;margin-top:.3rem;}
+.board-item{
+  display:flex;align-items:center;gap:.9rem;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(179,137,60,.15);
+  border-radius:8px;
+  padding:.75rem 1rem;
+}
+.board-rank{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.1rem;font-weight:600;
+  color:var(--oro);opacity:.65;
+  min-width:1.5rem;text-align:center;
+}
+.board-rank.gold{color:#ffd700;opacity:1;}
+.board-rank.silver{color:#c0c0c0;opacity:1;}
+.board-rank.bronze{color:#cd7f32;opacity:1;}
+.board-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1rem;flex:1;
+  color:var(--marfil);opacity:.85;
+}
+.board-name.me{color:var(--oro-claro);font-weight:600;}
+.board-score{
+  font-family:'Jost',sans-serif;
+  font-size:.9rem;font-weight:500;
+  color:var(--oro-claro);
+}
+.board-done{font-size:.68rem;letter-spacing:.1em;color:var(--oro);opacity:.5;}
+.board-empty{
+  text-align:center;font-size:.78rem;
+  color:rgba(246,241,231,.25);
+  letter-spacing:.1em;text-transform:uppercase;padding:1.5rem 0;
+}
 
-  .upload-hint {
-    font-size: 0.78rem;
-    letter-spacing: 0.08em;
-    color: var(--oro);
-    opacity: 0.6;
-    text-transform: uppercase;
-  }
+/* Gallery */
+.sec-gallery{background:#2c000a;padding:1.8rem 1.2rem 2.4rem;}
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:.4rem;margin-top:.3rem;
+}
+.gal-item{
+  aspect-ratio:1;border-radius:6px;overflow:hidden;
+  background:rgba(255,255,255,.04);position:relative;
+}
+.gal-item img{width:100%;height:100%;object-fit:cover;cursor:pointer;transition:transform .4s;}
+.gal-item img:hover{transform:scale(1.05);}
+.gal-label{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:.25rem .4rem;
+  background:linear-gradient(transparent,rgba(64,0,14,.85));
+  font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--oro);opacity:.9;text-align:center;
+}
+.gallery-empty{
+  text-align:center;font-size:.75rem;
+  color:rgba(246,241,231,.22);
+  letter-spacing:.12em;text-transform:uppercase;
+  padding:2rem 0;grid-column:1/-1;
+}
 
-  .name-input-wrap {
-    width: 100%;
-    max-width: 520px;
-    margin-top: 1.2rem;
-  }
+/* Lightbox */
+.lightbox{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.92);z-index:200;
+  align-items:center;justify-content:center;flex-direction:column;gap:.8rem;
+}
+.lightbox.open{display:flex;}
+.lightbox img{max-width:94vw;max-height:80vh;border-radius:6px;}
+.lb-caption{font-family:'Cormorant Garamond',serif;font-size:.85rem;letter-spacing:.1em;color:var(--oro);opacity:.7;}
+.lb-close{
+  position:absolute;top:1rem;right:1.4rem;
+  font-size:2rem;color:#fff;cursor:pointer;
+  opacity:.6;background:none;border:none;line-height:1;
+}
+.lb-close:hover{opacity:1;}
 
-  .name-input-wrap input {
-    width: 100%;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(179,137,60,0.3);
-    border-radius: 8px;
-    padding: 0.85rem 1.2rem;
-    color: var(--marfil);
-    font-family: 'Jost', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 300;
-    outline: none;
-    transition: border-color 0.3s;
-  }
-  .name-input-wrap input::placeholder { color: rgba(246,241,231,0.35); }
-  .name-input-wrap input:focus { border-color: var(--oro-claro); }
+/* Footer */
+.sec-footer{background:var(--vino-prof);padding:1.6rem 2rem;text-align:center;}
+.footer-script{font-family:'Parisienne',cursive;font-size:1.6rem;color:var(--oro-claro);opacity:.5;}
 
-  .preview-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-    gap: 0.6rem;
-    width: 100%;
-    max-width: 520px;
-    margin-top: 1rem;
-  }
+/* logout btn */
+.btn-logout{
+  display:block;margin:0 auto;margin-top:.3rem;
+  background:none;border:none;cursor:pointer;
+  font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--oro);opacity:.35;transition:opacity .2s;
+  font-family:'Jost',sans-serif;
+}
+.btn-logout:hover{opacity:.7;}
 
-  .preview-item {
-    position: relative;
-    aspect-ratio: 1;
-    border-radius: 6px;
-    overflow: hidden;
-    background: rgba(255,255,255,0.05);
-  }
-  .preview-item img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-  .preview-item .remove-btn {
-    position: absolute;
-    top: 3px; right: 3px;
-    width: 20px; height: 20px;
-    border-radius: 50%;
-    background: rgba(77,0,17,0.85);
-    border: none;
-    color: #fff;
-    font-size: 0.65rem;
-    cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    line-height: 1;
-  }
-  .preview-item .progress-bar {
-    position: absolute;
-    bottom: 0; left: 0;
-    height: 3px;
-    background: var(--oro-claro);
-    width: 0%;
-    transition: width 0.2s;
-  }
-  .preview-item .check {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(77,0,17,0.55);
-    font-size: 1.5rem;
-    opacity: 0;
-    transition: opacity 0.4s;
-  }
-  .preview-item.done .check { opacity: 1; }
-  .preview-item.done .progress-bar { width: 100%; background: #6fcf97; }
-
-  .btn-upload {
-    margin-top: 1.5rem;
-    padding: 0.9rem 3rem;
-    background: transparent;
-    border: 1.5px solid var(--oro);
-    border-radius: 50px;
-    color: var(--oro-claro);
-    font-family: 'Jost', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 500;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: background 0.3s, color 0.3s;
-  }
-  .btn-upload:hover:not(:disabled) {
-    background: var(--oro);
-    color: var(--vino-prof);
-  }
-  .btn-upload:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-  }
-
-  .status-msg {
-    margin-top: 1rem;
-    font-size: 0.88rem;
-    letter-spacing: 0.05em;
-    text-align: center;
-    min-height: 1.4em;
-    color: var(--oro-claro);
-  }
-  .status-msg.error { color: #e07070; }
-  .status-msg.success { color: #6fcf97; }
-
-  .gallery-section {
-    width: 100%;
-    max-width: 700px;
-    margin-top: 4rem;
-  }
-
-  .gallery-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.3rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--oro);
-    text-align: center;
-    margin-bottom: 1.5rem;
-    opacity: 0.8;
-  }
-
-  .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 0.7rem;
-  }
-
-  .gallery-item {
-    aspect-ratio: 1;
-    border-radius: 8px;
-    overflow: hidden;
-    background: rgba(255,255,255,0.04);
-  }
-  .gallery-item img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.4s;
-    cursor: pointer;
-  }
-  .gallery-item img:hover { transform: scale(1.04); }
-
-  .gallery-empty {
-    text-align: center;
-    font-size: 0.85rem;
-    color: rgba(246,241,231,0.3);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 2rem 0;
-  }
-
-  /* lightbox */
-  .lightbox {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.88);
-    z-index: 999;
-    align-items: center;
-    justify-content: center;
-  }
-  .lightbox.open { display: flex; }
-  .lightbox img {
-    max-width: 92vw;
-    max-height: 88vh;
-    border-radius: 6px;
-    box-shadow: 0 8px 60px #00000080;
-  }
-  .lightbox-close {
-    position: absolute;
-    top: 1.2rem; right: 1.5rem;
-    font-size: 2rem;
-    color: #fff;
-    cursor: pointer;
-    opacity: 0.7;
-    background: none;
-    border: none;
-    line-height: 1;
-  }
-
-  .back-link {
-    display: inline-block;
-    margin-bottom: 2.5rem;
-    font-size: 0.75rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--oro);
-    opacity: 0.55;
-    text-decoration: none;
-    transition: opacity 0.2s;
-    align-self: flex-start;
-  }
-  .back-link:hover { opacity: 1; }
+/* Spinner */
+.spinner{
+  display:inline-block;width:16px;height:16px;
+  border:2px solid rgba(179,137,60,.3);
+  border-top-color:var(--oro);
+  border-radius:50%;
+  animation:spin .7s linear infinite;
+  vertical-align:middle;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
 </style>
 </head>
 <body>
 
-<a class="back-link" href="/">&larr; Invitacion</a>
+<!-- ══════════════ LOGIN ══════════════ -->
+<div id="screen-login">
+  <p class="login-ornament">&#10022; &nbsp; &#10022; &nbsp; &#10022;</p>
+  <h1 class="login-title">Photo Challenge</h1>
+  <p class="login-sub">Demetrio &amp; Princesa &nbsp;&middot;&nbsp; 28 . Nov . 26</p>
 
-<div class="ornament">&#10022; &#10022; &#10022;</div>
-<h1>Comparte tus Fotos</h1>
-<p class="subtitle">Demetrio &amp; Princesa &nbsp;&middot;&nbsp; 28 . Nov . 26</p>
-
-<div class="divider"><span></span><i>&#9670;</i><span></span></div>
-
-<div class="upload-area" id="dropZone">
-  <input type="file" id="fileInput" accept="image/*,video/*" multiple>
-  <div class="upload-icon">&#128247;</div>
-  <p class="upload-label">Arrastra tus fotos aqui</p>
-  <p class="upload-hint">o toca para seleccionar &nbsp;&middot;&nbsp; jpg, png, mov, mp4</p>
-</div>
-
-<div class="name-input-wrap">
-  <input type="text" id="guestName" placeholder="Tu nombre (opcional)" maxlength="60">
-</div>
-
-<div class="preview-grid" id="previewGrid"></div>
-
-<button class="btn-upload" id="btnUpload" disabled>Subir Fotos</button>
-<p class="status-msg" id="statusMsg"></p>
-
-<div class="gallery-section">
-  <p class="gallery-title">Galeria de Invitados</p>
-  <div class="gallery-grid" id="galleryGrid">
-    <p class="gallery-empty" id="galleryEmpty">Las fotos apareceran aqui</p>
+  <div class="login-card">
+    <p>&#191;C&oacute;mo te llamas?</p>
+    <input class="field" id="loginName" type="text" placeholder="Tu nombre" maxlength="30" autocomplete="off">
+    <button class="btn-pill" id="btnEnter">Entrar al reto</button>
+    <p class="login-err" id="loginErr"></p>
   </div>
 </div>
 
-<div class="lightbox" id="lightbox">
-  <button class="lightbox-close" id="lightboxClose">&times;</button>
-  <img src="" alt="" id="lightboxImg">
+<!-- ══════════════ APP ══════════════ -->
+<div id="screen-app">
+<div class="tira">
+
+  <!-- Header -->
+  <section class="sec-header">
+    <a class="back-link" href="/">&larr; Invitaci&oacute;n</a>
+    <p class="hdr-ornament">&#10022; &nbsp; &#10022; &nbsp; &#10022;</p>
+    <h1 class="hdr-title">Photo Challenge</h1>
+    <p class="hdr-sub">Demetrio &amp; Princesa &nbsp;&middot;&nbsp; 28 . Nov . 26</p>
+
+    <div style="margin-top:1.4rem;display:flex;align-items:center;justify-content:center;gap:1.6rem;">
+      <!-- Progress ring -->
+      <div class="progress-wrap">
+        <svg width="54" height="54" viewBox="0 0 54 54">
+          <circle class="ring-bg" cx="27" cy="27" r="23"/>
+          <circle class="ring-fill" id="ringFill" cx="27" cy="27" r="23"
+            stroke-dasharray="144.5" stroke-dashoffset="144.5"/>
+        </svg>
+        <div class="ring-text"><span id="ringCount">0/0</span></div>
+      </div>
+      <!-- Score -->
+      <div class="score-block">
+        <div class="score-name" id="scoreNameEl">—</div>
+        <div class="score-pts" id="scorePtsEl">0</div>
+        <div class="score-label">puntos</div>
+      </div>
+    </div>
+
+    <button class="btn-logout" id="btnLogout">Salir</button>
+  </section>
+
+  <div class="divider"><div class="div-line"></div><div class="div-gem"></div><div class="div-line"></div></div>
+
+  <!-- Challenges -->
+  <section class="sec-challenges">
+    <p class="sec-label">Completa los retos &mdash; sube tu foto</p>
+    <div class="challenge-grid" id="challengeGrid"></div>
+  </section>
+
+  <div class="divider"><div class="div-line"></div><div class="div-gem"></div><div class="div-line"></div></div>
+
+  <!-- Leaderboard -->
+  <section class="sec-board">
+    <p class="sec-label">Tabla de l&iacute;deres</p>
+    <div class="board-list" id="boardList">
+      <p class="board-empty">Cargando...</p>
+    </div>
+  </section>
+
+  <div class="divider"><div class="div-line"></div><div class="div-gem"></div><div class="div-line"></div></div>
+
+  <!-- Gallery -->
+  <section class="sec-gallery">
+    <p class="sec-label">Galeria de retos</p>
+    <div class="gallery-grid" id="galleryGrid">
+      <p class="gallery-empty">Las fotos aparecer&aacute;n aqu&iacute;</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <section class="sec-footer">
+    <p class="footer-script">D &amp; P</p>
+  </section>
+
+</div><!-- .tira -->
+</div><!-- #screen-app -->
+
+<!-- ══════════════ UPLOAD MODAL ══════════════ -->
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal-sheet">
+    <div class="modal-drag"></div>
+    <span class="modal-emoji" id="modalEmoji"></span>
+    <p class="modal-title" id="modalTitle"></p>
+    <p class="modal-pts" id="modalPts"></p>
+
+    <img class="preview-img" id="previewImg" alt="">
+    <div class="upload-progress" id="uploadProgress">
+      <div class="upload-progress-fill" id="uploadProgressFill"></div>
+    </div>
+
+    <div class="drop-zone" id="modalDrop">
+      <input type="file" id="modalFile" accept="image/*" capture="environment">
+      <span class="drop-icon">&#128247;</span>
+      <p class="drop-text">Toca para tomar la foto</p>
+      <p class="drop-hint">o elige de tu galeria</p>
+    </div>
+
+    <p class="modal-status" id="modalStatus"></p>
+
+    <div class="modal-btns">
+      <button class="btn-cancel" id="btnCancel">Cancelar</button>
+      <button class="btn-pill" id="btnConfirm" style="flex:2;" disabled>Subir &amp; sumar puntos</button>
+    </div>
+  </div>
 </div>
 
-<!-- Firebase -->
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" id="lbClose">&times;</button>
+  <img src="" alt="" id="lbImg">
+  <span class="lb-caption" id="lbCaption"></span>
+</div>
+
+<!-- ══════════════ FIREBASE ══════════════ -->
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getStorage, ref, uploadBytesResumable, getDownloadURL, listAll } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+import { initializeApp }           from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL }
+                                    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {
+  getFirestore,
+  doc, setDoc, getDoc, updateDoc,
+  collection, onSnapshot, orderBy, query
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyBtSzynjEkq428M9mA_iu2aKYohF8n5jFo",
-    authDomain: "lost-game-6cd3f.firebaseapp.com",
-    projectId: "lost-game-6cd3f",
-    storageBucket: "lost-game-6cd3f.firebasestorage.app",
-    messagingSenderId: "910385085237",
-    appId: "1:910385085237:web:20c36926fddca50c686a7c",
-    measurementId: "G-F82T9WVPFK"
-  };
+const firebaseConfig = {
+  apiKey: "AIzaSyBtSzynjEkq428M9mA_iu2aKYohF8n5jFo",
+  authDomain: "lost-game-6cd3f.firebaseapp.com",
+  projectId: "lost-game-6cd3f",
+  storageBucket: "lost-game-6cd3f.firebasestorage.app",
+  messagingSenderId: "910385085237",
+  appId: "1:910385085237:web:20c36926fddca50c686a7c",
+  measurementId: "G-F82T9WVPFK"
+};
 
-  const app = initializeApp(firebaseConfig);
-  const storage = getStorage(app);
-  const FOLDER = "boda-fotos";
+const app     = initializeApp(firebaseConfig);
+const auth    = getAuth(app);
+const db      = getFirestore(app);
+const storage = getStorage(app);
 
-  let selectedFiles = [];
+// ── Retos ──────────────────────────────────────────────────────────────
+const CHALLENGES = [
+  { id:"novios",      emoji:"💍", name:"Foto con los novios",         pts:50 },
+  { id:"ceremonia",   emoji:"⛪", name:"Foto de la ceremonia",         pts:40 },
+  { id:"pastel",      emoji:"🎂", name:"Foto con el pastel",           pts:35 },
+  { id:"bailando",    emoji:"💃", name:"Alguien bailando",             pts:30 },
+  { id:"bebiendo",    emoji:"🥂", name:"Brindando con alguien",        pts:25 },
+  { id:"borracho",    emoji:"🍾", name:"El m&aacute;s borracho",       pts:45 },
+  { id:"lagrimas",    emoji:"😭", name:"Alguien llorando de emoci&oacute;n", pts:35 },
+  { id:"niños",       emoji:"👶", name:"Foto con un ni&ntilde;o",      pts:20 },
+  { id:"selfie",      emoji:"🤳", name:"Selfie en la pista",           pts:15 },
+  { id:"abuelos",     emoji:"👴", name:"Foto con los abuelos",         pts:30 },
+  { id:"mesa",        emoji:"🌹", name:"Foto de la decoraci&oacute;n", pts:15 },
+  { id:"primer_baile",emoji:"🕺", name:"El primer baile",              pts:50 },
+];
 
-  const dropZone   = document.getElementById("dropZone");
-  const fileInput  = document.getElementById("fileInput");
-  const previewGrid= document.getElementById("previewGrid");
-  const btnUpload  = document.getElementById("btnUpload");
-  const statusMsg  = document.getElementById("statusMsg");
-  const guestName  = document.getElementById("guestName");
-  const galleryGrid= document.getElementById("galleryGrid");
-  const galleryEmpty=document.getElementById("galleryEmpty");
-  const lightbox   = document.getElementById("lightbox");
-  const lightboxImg= document.getElementById("lightboxImg");
-  const lightboxClose=document.getElementById("lightboxClose");
+// ── State ──────────────────────────────────────────────────────────────
+let currentUser  = null;   // firebase user
+let playerName   = "";
+let playerData   = {};     // { completed:{id:true}, score:0 }
+let activeCh     = null;   // challenge being uploaded
+let selectedFile = null;
+let unsubBoard   = null;
 
-  // Drag & drop
-  dropZone.addEventListener("dragover", e => { e.preventDefault(); dropZone.classList.add("drag-over"); });
-  dropZone.addEventListener("dragleave", () => dropZone.classList.remove("drag-over"));
-  dropZone.addEventListener("drop", e => {
-    e.preventDefault();
-    dropZone.classList.remove("drag-over");
-    addFiles([...e.dataTransfer.files]);
-  });
-  fileInput.addEventListener("change", () => addFiles([...fileInput.files]));
+// ── DOM refs ───────────────────────────────────────────────────────────
+const screenLogin  = document.getElementById("screen-login");
+const screenApp    = document.getElementById("screen-app");
+const loginName    = document.getElementById("loginName");
+const btnEnter     = document.getElementById("btnEnter");
+const loginErr     = document.getElementById("loginErr");
+const scoreNameEl  = document.getElementById("scoreNameEl");
+const scorePtsEl   = document.getElementById("scorePtsEl");
+const ringFill     = document.getElementById("ringFill");
+const ringCount    = document.getElementById("ringCount");
+const challengeGrid= document.getElementById("challengeGrid");
+const boardList    = document.getElementById("boardList");
+const galleryGrid  = document.getElementById("galleryGrid");
+const modalBackdrop= document.getElementById("modalBackdrop");
+const modalEmoji   = document.getElementById("modalEmoji");
+const modalTitle   = document.getElementById("modalTitle");
+const modalPts     = document.getElementById("modalPts");
+const previewImg   = document.getElementById("previewImg");
+const uploadProgress=document.getElementById("uploadProgress");
+const uploadProgressFill=document.getElementById("uploadProgressFill");
+const modalDrop    = document.getElementById("modalDrop");
+const modalFile    = document.getElementById("modalFile");
+const modalStatus  = document.getElementById("modalStatus");
+const btnCancel    = document.getElementById("btnCancel");
+const btnConfirm   = document.getElementById("btnConfirm");
+const btnLogout    = document.getElementById("btnLogout");
+const lightbox     = document.getElementById("lightbox");
+const lbImg        = document.getElementById("lbImg");
+const lbCaption    = document.getElementById("lbCaption");
+const lbClose      = document.getElementById("lbClose");
 
-  function addFiles(files) {
-    files.forEach(f => {
-      if (!f.type.startsWith("image/") && !f.type.startsWith("video/")) return;
-      selectedFiles.push(f);
-      renderPreview(f, selectedFiles.length - 1);
-    });
-    btnUpload.disabled = selectedFiles.length === 0;
+// ── Auth ───────────────────────────────────────────────────────────────
+onAuthStateChanged(auth, async user => {
+  if (user) {
+    currentUser = user;
+    const snap = await getDoc(doc(db, "players", user.uid));
+    playerName  = snap.exists() ? snap.data().name : user.email.split("@")[0];
+    playerData  = snap.exists()
+      ? { completed: snap.data().completed || {}, score: snap.data().score || 0 }
+      : { completed:{}, score:0 };
+    showApp();
+  } else {
+    showLogin();
   }
+});
 
-  function renderPreview(file, idx) {
-    const item = document.createElement("div");
-    item.className = "preview-item";
-    item.id = `prev-${idx}`;
+function showLogin(){
+  screenLogin.style.display = "flex";
+  screenApp.style.display   = "none";
+  if (unsubBoard) { unsubBoard(); unsubBoard = null; }
+}
+function showApp(){
+  screenLogin.style.display = "none";
+  screenApp.style.display   = "block";
+  renderChallenges();
+  updateScoreUI();
+  subscribeBoard();
+  loadGallery();
+}
 
-    if (file.type.startsWith("image/")) {
-      const img = document.createElement("img");
-      img.src = URL.createObjectURL(file);
-      item.appendChild(img);
+// ── Login flow ─────────────────────────────────────────────────────────
+btnEnter.addEventListener("click", doLogin);
+loginName.addEventListener("keydown", e => { if(e.key==="Enter") doLogin(); });
+
+async function doLogin(){
+  const raw  = loginName.value.trim();
+  if (!raw) { loginErr.textContent = "Escribe tu nombre para continuar."; return; }
+  const name = raw.charAt(0).toUpperCase() + raw.slice(1).toLowerCase();
+  // email & password derived from name (lowercase, no spaces)
+  const slug  = name.toLowerCase().replace(/\s+/g,".").replace(/[^a-z0-9.]/g,"");
+  const email = `${slug}@boda.invitado`;
+  const pass  = slug;
+
+  btnEnter.disabled = true;
+  btnEnter.innerHTML = '<span class="spinner"></span>';
+  loginErr.textContent = "";
+
+  try {
+    await signInWithEmailAndPassword(auth, email, pass);
+  } catch(e1) {
+    if (e1.code === "auth/user-not-found" || e1.code === "auth/invalid-credential" || e1.code === "auth/invalid-email") {
+      try {
+        const cred = await createUserWithEmailAndPassword(auth, email, pass);
+        await setDoc(doc(db,"players",cred.user.uid),{
+          name, email, score:0, completed:{}, createdAt: Date.now()
+        });
+      } catch(e2) {
+        loginErr.textContent = "Error al crear usuario. Intenta con otro nombre.";
+        btnEnter.disabled = false; btnEnter.textContent = "Entrar al reto";
+        return;
+      }
     } else {
-      const icon = document.createElement("div");
-      icon.style.cssText = "display:flex;align-items:center;justify-content:center;height:100%;font-size:2rem;opacity:0.5";
-      icon.textContent = "🎬";
-      item.appendChild(icon);
+      loginErr.textContent = "Error al iniciar sesión.";
+      btnEnter.disabled = false; btnEnter.textContent = "Entrar al reto";
+      return;
     }
-
-    const bar = document.createElement("div");
-    bar.className = "progress-bar";
-    item.appendChild(bar);
-
-    const check = document.createElement("div");
-    check.className = "check";
-    check.textContent = "✓";
-    item.appendChild(check);
-
-    const rm = document.createElement("button");
-    rm.className = "remove-btn";
-    rm.textContent = "✕";
-    rm.onclick = () => { selectedFiles[idx] = null; item.remove(); btnUpload.disabled = selectedFiles.filter(Boolean).length === 0; };
-    item.appendChild(rm);
-
-    previewGrid.appendChild(item);
   }
+  btnEnter.disabled = false; btnEnter.textContent = "Entrar al reto";
+}
 
-  btnUpload.addEventListener("click", async () => {
-    const files = selectedFiles.filter(Boolean);
-    if (!files.length) return;
+btnLogout.addEventListener("click", () => signOut(auth));
 
-    btnUpload.disabled = true;
-    statusMsg.className = "status-msg";
-    statusMsg.textContent = "Subiendo...";
-
-    const name = guestName.value.trim() || "invitado";
-    const ts = Date.now();
-    let done = 0;
-
-    const uploads = files.map((file, i) => new Promise((resolve, reject) => {
-      const ext = file.name.split(".").pop();
-      const path = `${FOLDER}/${name}_${ts}_${i}.${ext}`;
-      const storageRef = ref(storage, path);
-      const task = uploadBytesResumable(storageRef, file);
-      const itemEl = document.getElementById(`prev-${selectedFiles.indexOf(file)}`);
-      const bar = itemEl ? itemEl.querySelector(".progress-bar") : null;
-
-      task.on("state_changed",
-        snap => { if (bar) bar.style.width = (snap.bytesTransferred / snap.totalBytes * 100) + "%"; },
-        reject,
-        () => { if (itemEl) itemEl.classList.add("done"); done++; resolve(); }
-      );
-    }));
-
-    try {
-      await Promise.all(uploads);
-      statusMsg.className = "status-msg success";
-      statusMsg.textContent = `${done} foto${done !== 1 ? "s" : ""} subida${done !== 1 ? "s" : ""}. Gracias!`;
-      selectedFiles = [];
-      setTimeout(() => { previewGrid.innerHTML = ""; statusMsg.textContent = ""; loadGallery(); }, 2500);
-    } catch (e) {
-      statusMsg.className = "status-msg error";
-      statusMsg.textContent = "Error al subir. Intenta de nuevo.";
-      btnUpload.disabled = false;
-    }
+// ── Render challenges ──────────────────────────────────────────────────
+function renderChallenges(){
+  challengeGrid.innerHTML = "";
+  CHALLENGES.forEach(ch => {
+    const done  = !!playerData.completed[ch.id];
+    const card  = document.createElement("div");
+    card.className = "challenge-card" + (done ? " done" : "");
+    card.innerHTML = `
+      ${done && playerData.completed[ch.id].url
+        ? `<img class="ch-photo-thumb" src="${playerData.completed[ch.id].url}" alt="">`
+        : ""}
+      <div class="ch-check">&#10003;</div>
+      <span class="ch-emoji">${ch.emoji}</span>
+      <p class="ch-name">${ch.name}</p>
+      <p class="ch-pts">+${ch.pts} pts</p>
+    `;
+    if (!done) card.addEventListener("click", () => openModal(ch));
+    challengeGrid.appendChild(card);
   });
+}
 
-  // Gallery
-  async function loadGallery() {
-    try {
-      const folderRef = ref(storage, FOLDER);
-      const result = await listAll(folderRef);
-      if (result.items.length === 0) { galleryEmpty.style.display = "block"; return; }
-      galleryEmpty.style.display = "none";
+function updateScoreUI(){
+  const done  = Object.keys(playerData.completed).length;
+  const total = CHALLENGES.length;
+  scoreNameEl.textContent = playerName;
+  scorePtsEl.textContent  = playerData.score;
+  ringCount.textContent   = `${done}/${total}`;
+  const circ  = 144.5;
+  ringFill.style.strokeDashoffset = circ - (circ * done / total);
+}
+
+// ── Modal ──────────────────────────────────────────────────────────────
+function openModal(ch){
+  activeCh    = ch;
+  selectedFile= null;
+  modalEmoji.textContent  = ch.emoji;
+  modalTitle.innerHTML    = ch.name;
+  modalPts.textContent    = `+${ch.pts} puntos`;
+  previewImg.style.display= "none";
+  previewImg.src          = "";
+  uploadProgress.style.display="none";
+  uploadProgressFill.style.width="0%";
+  modalStatus.textContent = "";
+  modalStatus.className   = "modal-status";
+  modalDrop.style.display = "block";
+  btnConfirm.disabled     = true;
+  modalBackdrop.classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+function closeModal(){
+  modalBackdrop.classList.remove("open");
+  document.body.style.overflow = "";
+  activeCh = null; selectedFile = null;
+}
+btnCancel.addEventListener("click", closeModal);
+modalBackdrop.addEventListener("click", e => { if(e.target===modalBackdrop) closeModal(); });
+
+// File selection
+modalFile.addEventListener("change", () => {
+  const f = modalFile.files[0];
+  if (!f) return;
+  selectedFile = f;
+  const url = URL.createObjectURL(f);
+  previewImg.src = url;
+  previewImg.style.display = "block";
+  btnConfirm.disabled = false;
+  modalStatus.textContent = "";
+});
+modalDrop.addEventListener("dragover", e=>{e.preventDefault();modalDrop.classList.add("drag-over");});
+modalDrop.addEventListener("dragleave",()=>modalDrop.classList.remove("drag-over"));
+modalDrop.addEventListener("drop",e=>{
+  e.preventDefault(); modalDrop.classList.remove("drag-over");
+  const f = e.dataTransfer.files[0];
+  if (!f||!f.type.startsWith("image/")) return;
+  selectedFile = f;
+  previewImg.src = URL.createObjectURL(f);
+  previewImg.style.display = "block";
+  btnConfirm.disabled = false;
+});
+
+// Upload
+btnConfirm.addEventListener("click", async () => {
+  if (!selectedFile || !activeCh || !currentUser) return;
+  btnConfirm.disabled = true;
+  btnCancel.disabled  = true;
+  modalDrop.style.display = "none";
+  uploadProgress.style.display = "block";
+  modalStatus.textContent = "Subiendo...";
+  modalStatus.className = "modal-status";
+
+  const ext  = selectedFile.name.split(".").pop() || "jpg";
+  const path = `challenges/${activeCh.id}/${currentUser.uid}_${Date.now()}.${ext}`;
+  const task = uploadBytesResumable(sRef(storage, path), selectedFile);
+
+  task.on("state_changed",
+    snap => {
+      uploadProgressFill.style.width = (snap.bytesTransferred/snap.totalBytes*100)+"%";
+    },
+    err => {
+      modalStatus.textContent = "Error al subir. Intenta de nuevo.";
+      modalStatus.className = "modal-status error";
+      btnCancel.disabled = false;
+      btnConfirm.disabled = false;
+      modalDrop.style.display = "block";
+    },
+    async () => {
+      const url = await getDownloadURL(task.snapshot.ref);
+      // Save to Firestore
+      const newCompleted = {
+        ...playerData.completed,
+        [activeCh.id]: { url, ts: Date.now() }
+      };
+      const newScore = (playerData.score || 0) + activeCh.pts;
+
+      await updateDoc(doc(db,"players",currentUser.uid),{
+        completed: newCompleted,
+        score: newScore
+      });
+
+      // Also save to gallery collection for easy listing
+      await setDoc(doc(db,"gallery",`${activeCh.id}_${currentUser.uid}`),{
+        challengeId: activeCh.id,
+        challengeName: activeCh.name,
+        challengeEmoji: activeCh.emoji,
+        playerName,
+        url,
+        ts: Date.now()
+      });
+
+      playerData.completed = newCompleted;
+      playerData.score     = newScore;
+
+      modalStatus.textContent = `¡+${activeCh.pts} puntos sumados!`;
+      modalStatus.className = "modal-status success";
+
+      renderChallenges();
+      updateScoreUI();
+      loadGallery();
+
+      setTimeout(() => { closeModal(); btnCancel.disabled = false; }, 1800);
+    }
+  );
+});
+
+// ── Leaderboard (real-time) ────────────────────────────────────────────
+function subscribeBoard(){
+  const q = query(collection(db,"players"), orderBy("score","desc"));
+  unsubBoard = onSnapshot(q, snap => {
+    boardList.innerHTML = "";
+    if (snap.empty) {
+      boardList.innerHTML = '<p class="board-empty">Nadie ha subido fotos aún</p>';
+      return;
+    }
+    const ranks = ["gold","silver","bronze"];
+    snap.docs.slice(0,20).forEach((d,i) => {
+      const data  = d.data();
+      const isMe  = d.id === currentUser?.uid;
+      const done  = Object.keys(data.completed||{}).length;
+      const item  = document.createElement("div");
+      item.className = "board-item" + (isMe ? " my-row" : "");
+      if (isMe) item.style.borderColor = "rgba(179,137,60,.45)";
+      item.innerHTML = `
+        <span class="board-rank ${ranks[i]||""}">${i===0?"🥇":i===1?"🥈":i===2?"🥉":i+1}</span>
+        <span class="board-name ${isMe?"me":""}">${data.name||"?"}</span>
+        <span class="board-done">${done} retos</span>
+        <span class="board-score">${data.score||0} pts</span>
+      `;
+      boardList.appendChild(item);
+    });
+  });
+}
+
+// ── Gallery ────────────────────────────────────────────────────────────
+async function loadGallery(){
+  try {
+    const q = query(collection(db,"gallery"), orderBy("ts","desc"));
+    onSnapshot(q, snap => {
       galleryGrid.innerHTML = "";
-
-      const urls = await Promise.all(result.items.map(item => getDownloadURL(item)));
-      urls.forEach(url => {
-        const wrap = document.createElement("div");
-        wrap.className = "gallery-item";
-        const img = document.createElement("img");
-        img.src = url;
-        img.loading = "lazy";
-        img.onclick = () => { lightboxImg.src = url; lightbox.classList.add("open"); };
-        wrap.appendChild(img);
+      if (snap.empty) {
+        galleryGrid.innerHTML = '<p class="gallery-empty">Las fotos aparecer&aacute;n aqu&iacute;</p>';
+        return;
+      }
+      snap.docs.forEach(d => {
+        const data = d.data();
+        const wrap = document.createElement("div"); wrap.className = "gal-item";
+        const img  = document.createElement("img");
+        img.src = data.url; img.loading = "lazy";
+        img.onclick = () => {
+          lbImg.src = data.url;
+          lbCaption.innerHTML = `${data.challengeEmoji} ${data.challengeName} &mdash; ${data.playerName}`;
+          lightbox.classList.add("open");
+        };
+        const lbl = document.createElement("div"); lbl.className = "gal-label";
+        lbl.textContent = data.challengeEmoji + " " + data.playerName;
+        wrap.appendChild(img); wrap.appendChild(lbl);
         galleryGrid.appendChild(wrap);
       });
-    } catch (e) {
-      // Storage rules may block listing — silently skip gallery
-    }
+    });
+  } catch(e) {
+    galleryGrid.innerHTML = '<p class="gallery-empty">No se pudo cargar la galería</p>';
   }
+}
 
-  lightboxClose.onclick = () => lightbox.classList.remove("open");
-  lightbox.addEventListener("click", e => { if (e.target === lightbox) lightbox.classList.remove("open"); });
-
-  loadGallery();
+// ── Lightbox ───────────────────────────────────────────────────────────
+lbClose.onclick = () => lightbox.classList.remove("open");
+lightbox.addEventListener("click", e => { if(e.target===lightbox) lightbox.classList.remove("open"); });
 </script>
-
 </body>
 </html>
