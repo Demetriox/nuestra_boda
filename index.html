@@ -243,10 +243,7 @@
     padding:clamp(56px, 13vw, 80px) 30px clamp(60px, 14vw, 88px);
     text-align:center;
     scroll-snap-align:start;
-    min-height:100dvh;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
+    scroll-snap-stop:always;
   }
   .esquinas{ position:absolute; inset:14px; pointer-events:none; }
   .esquinas svg{ position:absolute; width:74px; height:74px; opacity:.95; }
@@ -320,11 +317,6 @@
   .detalles-top{
     padding:clamp(48px, 11vw, 68px) 26px clamp(48px, 11vw, 68px);
     text-align:center;
-    scroll-snap-align:start;
-    min-height:100dvh;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
   }
   .insignia{ position:relative; width:min(340px, 88%); margin:0 auto; }
   .insignia svg{ width:100%; height:auto; display:block; filter:drop-shadow(0 12px 26px rgba(70,10,25,.28)); }
