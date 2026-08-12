@@ -95,6 +95,7 @@
   .ubicacion{
     display:inline-flex;
     align-items:center;
+    justify-content:center;
     gap:7px;
     margin-top:10px;
     font-size:13px;
@@ -106,6 +107,8 @@
     border-bottom:1px solid currentColor;
     padding-bottom:3px;
   }
+  .ceremonia, .detalles-top{ text-align:center; }
+  .ceremonia > *, .detalles-top > *{ margin-left:auto; margin-right:auto; }
   .ubicacion svg{ width:13px; flex:none; }
   a:focus-visible{ outline:2px solid var(--oro-claro); outline-offset:4px; }
 
@@ -257,7 +260,7 @@
     color:var(--marfil);
   }
   .marco-arco{
-    width:min(330px, 88%);
+    width:min(390px, 96%);
     aspect-ratio:1 / .82;
     margin:clamp(26px, 6vw, 36px) auto 0;
     border:2.5px solid var(--oro-claro);
