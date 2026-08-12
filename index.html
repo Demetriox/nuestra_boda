@@ -592,7 +592,7 @@
   </section>
 
   <!-- ============ 4 · DETALLES ============ -->
-  <section class="detalles-top toile">
+  <section class="detalles-top toile" id="sec-detalles">
     <div class="insignia">
       <svg viewBox="0 0 460 250" aria-hidden="true">
         <path d="M230 8
@@ -643,7 +643,7 @@
   </section>
 
   <!-- ============ 5 · REGALOS ============ -->
-  <section class="regalos">
+  <section class="regalos" id="sec-regalos">
     <svg class="icono" viewBox="0 0 24 24" fill="none" stroke="#d4af6a" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
       <rect x="3" y="9" width="18" height="12" rx="1"/>
       <path d="M3 13 L21 13 M12 9 L12 21"/>
@@ -654,7 +654,7 @@
   </section>
 
   <!-- ============ 6 · CONFIRMAR ============ -->
-  <section class="confirmar vino-fondo">
+  <section class="confirmar vino-fondo" id="sec-confirmar">
 
     <div class="oval-cisnes" id="marco-cisnes-2">
       <video class="foto cisnes" autoplay muted loop playsinline preload="auto" aria-label="Dos cisnes formando un corazón"></video>
@@ -736,5 +736,44 @@
   })();
 </script>
 
+
+<script>
+// Snap downward only: detalles → regalos → confirmar
+(function(){
+  const snaps = [
+    document.getElementById('sec-detalles'),
+    document.getElementById('sec-regalos'),
+    document.getElementById('sec-confirmar'),
+  ];
+  let lastY = window.scrollY;
+  let ticking = false;
+  let cooldown = false;
+
+  window.addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      const currentY = window.scrollY;
+      const goingDown = currentY > lastY;
+      lastY = currentY;
+      ticking = false;
+
+      if (!goingDown || cooldown) return;
+
+      const vh = window.innerHeight;
+      for (const sec of snaps) {
+        const rect = sec.getBoundingClientRect();
+        // If section top is just entering view (within 80px below fold)
+        if (rect.top > 0 && rect.top < vh * 0.45) {
+          cooldown = true;
+          sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          setTimeout(() => { cooldown = false; }, 800);
+          break;
+        }
+      }
+    });
+  }, { passive: true });
+})();
+</script>
 </body>
 </html>
