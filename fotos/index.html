@@ -459,7 +459,8 @@ body{
 
   <div class="login-card">
     <p>&#191;C&oacute;mo te llamas?</p>
-    <input class="field" id="loginName" type="text" placeholder="Tu nombre" maxlength="30" autocomplete="off">
+    <input class="field" id="loginName" type="text" placeholder="Nombre" maxlength="30" autocomplete="off">
+    <input class="field" id="loginLastName" type="text" placeholder="Apellido" maxlength="30" autocomplete="off">
     <button class="btn-pill" id="btnEnter">Entrar al reto</button>
     <p class="login-err" id="loginErr"></p>
   </div>
@@ -613,9 +614,7 @@ const CHALLENGES = [
   { id:"bebiendo",    emoji:"🥂", name:"Brindando con alguien",        pts:25 },
   { id:"borracho",    emoji:"🍾", name:"El m&aacute;s borracho",       pts:45 },
   { id:"lagrimas",    emoji:"😭", name:"Alguien llorando de emoci&oacute;n", pts:35 },
-  { id:"niños",       emoji:"👶", name:"Foto con un ni&ntilde;o",      pts:20 },
   { id:"selfie",      emoji:"🤳", name:"Selfie en la pista",           pts:15 },
-  { id:"abuelos",     emoji:"👴", name:"Foto con los abuelos",         pts:30 },
   { id:"mesa",        emoji:"🌹", name:"Foto de la decoraci&oacute;n", pts:15 },
   { id:"primer_baile",emoji:"🕺", name:"El primer baile",              pts:50 },
 ];
@@ -631,7 +630,8 @@ let unsubBoard   = null;
 // ── DOM refs ───────────────────────────────────────────────────────────
 const screenLogin  = document.getElementById("screen-login");
 const screenApp    = document.getElementById("screen-app");
-const loginName    = document.getElementById("loginName");
+const loginName     = document.getElementById("loginName");
+const loginLastName = document.getElementById("loginLastName");
 const btnEnter     = document.getElementById("btnEnter");
 const loginErr     = document.getElementById("loginErr");
 const scoreNameEl  = document.getElementById("scoreNameEl");
@@ -690,13 +690,17 @@ function showApp(){
 
 // ── Login flow ─────────────────────────────────────────────────────────
 btnEnter.addEventListener("click", doLogin);
-loginName.addEventListener("keydown", e => { if(e.key==="Enter") doLogin(); });
+loginName.addEventListener("keydown", e => { if(e.key==="Enter") loginLastName.focus(); });
+loginLastName.addEventListener("keydown", e => { if(e.key==="Enter") doLogin(); });
 
 async function doLogin(){
-  const raw  = loginName.value.trim();
-  if (!raw) { loginErr.textContent = "Escribe tu nombre para continuar."; return; }
-  const name = raw.charAt(0).toUpperCase() + raw.slice(1).toLowerCase();
-  // email & password derived from name (lowercase, no spaces)
+  const rawFirst = loginName.value.trim();
+  const rawLast  = loginLastName.value.trim();
+  if (!rawFirst) { loginErr.textContent = "Escribe tu nombre para continuar."; return; }
+  if (!rawLast)  { loginErr.textContent = "Escribe tu apellido para continuar."; return; }
+  const cap = s => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
+  const name = `${cap(rawFirst)} ${cap(rawLast)}`;
+  // email & password derived from full name (lowercase, no spaces)
   const slug  = name.toLowerCase().replace(/\s+/g,".").replace(/[^a-z0-9.]/g,"");
   const email = `${slug}@boda.invitado`;
   const pass  = slug;
