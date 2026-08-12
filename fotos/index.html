@@ -572,8 +572,7 @@ body{
 <!-- ══════════════ FIREBASE ══════════════ -->
 <script type="module">
 import { initializeApp }           from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL }
-                                    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+// Cloudinary — no Firebase Storage needed
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -600,7 +599,10 @@ const firebaseConfig = {
 const app     = initializeApp(firebaseConfig);
 const auth    = getAuth(app);
 const db      = getFirestore(app);
-const storage = getStorage(app);
+
+// Cloudinary config
+const CLD_CLOUD  = "inxiulju";
+const CLD_PRESET = "Princesaydemetrio";
 
 // ── Retos ──────────────────────────────────────────────────────────────
 const CHALLENGES = [
@@ -818,58 +820,70 @@ btnConfirm.addEventListener("click", async () => {
   modalStatus.textContent = "Subiendo...";
   modalStatus.className = "modal-status";
 
-  const ext  = selectedFile.name.split(".").pop() || "jpg";
-  const path = `challenges/${activeCh.id}/${currentUser.uid}_${Date.now()}.${ext}`;
-  const task = uploadBytesResumable(sRef(storage, path), selectedFile);
+  // Upload to Cloudinary via unsigned preset
+  const formData = new FormData();
+  formData.append("file", selectedFile);
+  formData.append("upload_preset", CLD_PRESET);
+  formData.append("folder", `boda/${activeCh.id}`);
+  formData.append("public_id", `${currentUser.uid}_${Date.now()}`);
 
-  task.on("state_changed",
-    snap => {
-      uploadProgressFill.style.width = (snap.bytesTransferred/snap.totalBytes*100)+"%";
-    },
-    err => {
-      modalStatus.textContent = "Error al subir. Intenta de nuevo.";
-      modalStatus.className = "modal-status error";
-      btnCancel.disabled = false;
-      btnConfirm.disabled = false;
-      modalDrop.style.display = "block";
-    },
-    async () => {
-      const url = await getDownloadURL(task.snapshot.ref);
-      // Save to Firestore
-      const newCompleted = {
-        ...playerData.completed,
-        [activeCh.id]: { url, ts: Date.now() }
-      };
-      const newScore = (playerData.score || 0) + activeCh.pts;
+  const xhr = new XMLHttpRequest();
+  xhr.open("POST", `https://api.cloudinary.com/v1_1/${CLD_CLOUD}/image/upload`);
 
-      await updateDoc(doc(db,"players",currentUser.uid),{
-        completed: newCompleted,
-        score: newScore
-      });
+  xhr.upload.onprogress = e => {
+    if (e.lengthComputable)
+      uploadProgressFill.style.width = (e.loaded / e.total * 100) + "%";
+  };
 
-      // Also save to gallery collection for easy listing
-      await setDoc(doc(db,"gallery",`${activeCh.id}_${currentUser.uid}`),{
-        challengeId: activeCh.id,
-        challengeName: activeCh.name,
-        challengeEmoji: activeCh.emoji,
-        playerName,
-        url,
-        ts: Date.now()
-      });
+  xhr.onerror = () => {
+    modalStatus.textContent = "Error al subir. Intenta de nuevo.";
+    modalStatus.className = "modal-status error";
+    btnCancel.disabled = false;
+    btnConfirm.disabled = false;
+    modalDrop.style.display = "block";
+  };
 
-      playerData.completed = newCompleted;
-      playerData.score     = newScore;
+  xhr.onload = async () => {
+    if (xhr.status !== 200) { xhr.onerror(); return; }
+    const res = JSON.parse(xhr.responseText);
+    const url = res.secure_url;
 
-      modalStatus.textContent = `¡+${activeCh.pts} puntos sumados!`;
-      modalStatus.className = "modal-status success";
+    // Save to Firestore
+    const newCompleted = {
+      ...playerData.completed,
+      [activeCh.id]: { url, ts: Date.now() }
+    };
+    const newScore = (playerData.score || 0) + activeCh.pts;
 
-      renderChallenges();
-      updateScoreUI();
-      loadGallery();
+    await updateDoc(doc(db,"players",currentUser.uid),{
+      completed: newCompleted,
+      score: newScore
+    });
 
-      setTimeout(() => { closeModal(); btnCancel.disabled = false; }, 1800);
-    }
-  );
+    // Gallery collection
+    await setDoc(doc(db,"gallery",`${activeCh.id}_${currentUser.uid}`),{
+      challengeId: activeCh.id,
+      challengeName: activeCh.name,
+      challengeEmoji: activeCh.emoji,
+      playerName,
+      url,
+      ts: Date.now()
+    });
+
+    playerData.completed = newCompleted;
+    playerData.score     = newScore;
+
+    modalStatus.textContent = `¡+${activeCh.pts} puntos sumados!`;
+    modalStatus.className = "modal-status success";
+
+    renderChallenges();
+    updateScoreUI();
+    loadGallery();
+
+    setTimeout(() => { closeModal(); btnCancel.disabled = false; }, 1800);
+  };
+
+  xhr.send(formData);
 });
 
 // ── Leaderboard (real-time) ────────────────────────────────────────────
