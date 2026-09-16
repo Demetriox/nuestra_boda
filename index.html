@@ -417,6 +417,39 @@
     line-height:1.6;
     margin-top:14px;
   }
+  .btn-copiar{
+    display:inline-flex;
+    align-items:center;
+    vertical-align:middle;
+    margin-left:6px;
+    padding:0;
+    border:none;
+    background:transparent;
+    color:var(--oro-claro);
+    cursor:pointer;
+    transition:opacity .2s;
+  }
+  .btn-copiar:hover{ opacity:.7; }
+  .btn-copiar svg{ width:18px; height:18px; }
+  .btn-liverpool{
+    display:inline-block;
+    padding:14px 32px;
+    border:1.5px solid var(--oro-claro);
+    border-radius:999px;
+    background:transparent;
+    color:var(--marfil);
+    text-decoration:none;
+    font-family:'Jost', sans-serif;
+    font-size:13px;
+    font-weight:500;
+    letter-spacing:0;
+    text-transform:uppercase;
+    transition:background .3s, color .3s;
+  }
+  .btn-liverpool:hover, .btn-liverpool:focus-visible{
+    background:var(--oro-claro);
+    color:var(--vino-prof);
+  }
 
   /* ================= 6 · CONFIRMAR ================= */
   .confirmar{
@@ -599,12 +632,25 @@
       <strong>Jesús Demetrio Contreras Carrillo</strong><br>
       BBVA<br>
       4152 3140 2038 6853
+      <button class="btn-copiar" onclick="copiarTarjeta('4152 3140 2038 6853', this)" aria-label="Copiar número de tarjeta">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      </button>
     </p>
-    <p style="margin-top:12px; font-family:'Cormorant Garamond', serif; font-size:clamp(20px, 5.2vw, 24px); line-height:1.5;">
+
+    <p style="margin-top:20px; font-family:'Cormorant Garamond', serif; font-size:clamp(20px, 5.2vw, 24px); line-height:1.5;">
       <strong>Princesa Alondra Dessens Higuera</strong><br>
       BBVA<br>
       4152 3146 3206 9152
+      <button class="btn-copiar" onclick="copiarTarjeta('4152 3146 3206 9152', this)" aria-label="Copiar número de tarjeta">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      </button>
     </p>
+
+    <div style="text-align:center; margin-top:24px;">
+      <a class="btn-liverpool" href="https://mesaderegalos.liverpool.com.mx/milistaderegalos/60042648" target="_blank" rel="noopener">
+        Mesa de Regalos Liverpool
+      </a>
+    </div>
   </section>
 
   <!-- ============ 6 · CONFIRMAR ============ -->
@@ -619,7 +665,7 @@
     <h2 class="script">Confirmar Asistencia</h2>
     <p class="aviso">Agradecemos confirmes la<br>asistencia antes del 20 de noviembre.</p>
 
-    <a class="boton-rsvp" id="rsvp" href="https://wa.me/526620000000?text=" rel="noopener">Confirmar aquí</a>
+    <a class="boton-rsvp" id="rsvp" href="https://wa.me/5216621965822?text=" rel="noopener">Confirmar aquí</a>
 
     <p class="gracias">¡Muchas gracias!</p>
 
@@ -634,6 +680,17 @@
   <svg class="icono-nota" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg>
   <svg class="icono-pausa" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
 </button>
+
+<script>
+  /* Copiar número de tarjeta */
+  function copiarTarjeta(numero, btn) {
+    navigator.clipboard.writeText(numero).then(function() {
+      var original = btn.innerHTML;
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+      setTimeout(function() { btn.innerHTML = original; }, 1500);
+    });
+  }
+</script>
 
 <script>
   /* Video de los cisnes */
@@ -655,17 +712,28 @@
       if (unlocked) return;
       unlocked = true;
       video.muted = false;
+      // Force play in case autoplay didn't start yet
+      video.play().catch(function(){
+        // Browser still blocked — mute and retry so at least video plays
+        video.muted = true;
+        video.play();
+        unlocked = false;
+        btn.classList.remove('sonando');
+        btn.setAttribute('aria-pressed', 'false');
+      });
       btn.classList.add('sonando');
       btn.setAttribute('aria-pressed', 'true');
     }
 
+    // Only use real user gestures (scroll doesn't count for autoplay policy)
     document.addEventListener('click', unlock, { once: true });
     document.addEventListener('touchstart', unlock, { once: true });
-    document.addEventListener('scroll', unlock, { once: true });
 
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
       if (!unlocked) { unlock(); return; }
       video.muted = !video.muted;
+      if (!video.muted) video.play().catch(function(){});
       btn.classList.toggle('sonando', !video.muted);
       btn.setAttribute('aria-pressed', String(!video.muted));
     });
