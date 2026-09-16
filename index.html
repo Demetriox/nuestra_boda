@@ -52,7 +52,8 @@
 
   .tira > section{
     scroll-snap-align:start;
-    min-height:100dvh;
+    height:100dvh;
+    overflow:hidden;
     display:flex;
     flex-direction:column;
     justify-content:center;
@@ -227,7 +228,7 @@
     overflow:hidden;
   }
   .bendicion .caps-jost{
-    font-size:clamp(10px, 2.6vw, 13px);
+    font-size:clamp(13px, 3.4vw, 16px);
     line-height:2.2;
   }
   .bendicion .nombres-grandes{
@@ -239,7 +240,7 @@
     position:relative;
     width:min(200px, 56%);
     aspect-ratio:1 / 1.22;
-    margin:clamp(28px, 6vw, 44px) auto 0;
+    margin:clamp(33px, 7vw, 49px) auto 0;
   }
   .marco-encaje svg.encaje{
     position:absolute;
@@ -458,7 +459,7 @@
 
   /* ================= 6 · CONFIRMAR ================= */
   .confirmar{
-    padding:clamp(52px, 12vw, 72px) 32px clamp(64px, 14vw, 90px);
+    padding:16px 32px;
     text-align:center;
     min-height:100dvh;
     display:flex;
@@ -466,9 +467,10 @@
     justify-content:center;
   }
   .oval-cisnes{
-    width:min(210px, 60%);
-    aspect-ratio:1 / 1.2;
-    margin:0 auto clamp(26px, 6vw, 36px);
+    width:min(216px, 50%);
+    aspect-ratio:1 / 1.3;
+    margin:0 auto 22px;
+    flex-shrink:0;
     border-radius:50%;
     overflow:hidden;
     box-shadow:0 0 0 2.5px var(--oro-claro), 0 0 0 7px var(--vino-prof), 0 0 0 8.5px rgba(212,175,106,.5), 0 16px 40px rgba(0,0,0,.35);
@@ -476,29 +478,29 @@
   }
   .confirmar h2{
     font-family:'Ephesis', 'Parisienne', cursive;
-    font-size:clamp(36px, 9.5vw, 50px);
-    color:var(--marfil);
+    font-size:clamp(28px, 7.5vw, 40px);
+    color:var(--tinta);
   }
   .confirmar .aviso{
     font-family:'Cormorant Garamond', serif;
-    font-size:clamp(16px, 4.2vw, 19px);
-    line-height:1.55;
-    margin-top:12px;
+    font-size:clamp(13px, 3.4vw, 16px);
+    line-height:1.45;
+    margin-top:8px;
   }
   .dedicatoria{
     font-family:'Cormorant Garamond', serif;
     font-style:italic;
     font-size:clamp(17px, 4.4vw, 20px);
-    color:var(--oro-claro);
+    color:var(--oro);
     margin-bottom:14px;
   }
   .boton-rsvp{
     display:inline-block;
-    margin-top:24px;
-    padding:14px 40px;
-    border:1.5px solid var(--oro-claro);
+    margin-top:16px;
+    padding:10px 30px;
+    border:1.5px solid var(--oro);
     border-radius:999px;
-    color:var(--marfil);
+    color:var(--tinta);
     text-decoration:none;
     font-size:13px;
     font-weight:500;
@@ -507,12 +509,12 @@
     text-transform:uppercase;
     transition:background .3s, color .3s;
   }
-  .boton-rsvp:hover, .boton-rsvp:focus-visible{ background:var(--oro-claro); color:var(--vino-prof); }
+  .boton-rsvp:hover, .boton-rsvp:focus-visible{ background:var(--oro); color:var(--marfil); }
   .gracias{
     font-family:'Cormorant Garamond', serif;
     font-style:italic;
-    font-size:clamp(18px, 4.8vw, 22px);
-    margin-top:clamp(24px, 6vw, 34px);
+    font-size:clamp(15px, 4vw, 18px);
+    margin-top:clamp(12px, 3vw, 18px);
   }
 
   /* ── Floating music button ── */
@@ -640,7 +642,7 @@
   <!-- ============ 5 · REGALOS ============ -->
   <section class="regalos" id="sec-regalos">
     <img src="regaloo.png" alt="Sobre de regalo" style="width:min(260px, 65%); margin:0 auto 16px; display:block;">
-    <h2 class="script">Sugerencia de Regalos</h2>
+    <h2 class="script">Lluvia de sobres digital</h2>
     <p style="margin-top:16px; font-family:'Cormorant Garamond', serif; font-size:clamp(20px, 5.2vw, 24px); line-height:1.5;">
       <strong>Jesús Demetrio Contreras Carrillo</strong><br>
       BBVA<br>
@@ -667,24 +669,33 @@
   </section>
 
   <!-- ============ 6 · CONFIRMAR ============ -->
-  <section class="confirmar vino-fondo" id="sec-confirmar">
+  <section class="confirmar vino-fondo" id="sec-confirmar" style="background:#f6f1e7 url('Demetrio%20%26%20Princesa.png') center/cover; color:var(--tinta);">
 
-    <div class="oval-cisnes" id="marco-cisnes-2">
-      <video class="foto cisnes" autoplay muted loop playsinline preload="auto" aria-label="Dos cisnes formando un corazón"></video>
+    <div style="position:relative; display:flex; align-items:center; justify-content:center;">
+      <img src="nube.png" alt="" style="width:min(460px, 120%); display:block; margin-left:-45px;">
+      <div class="oval-cisnes" id="marco-cisnes-2" style="position:absolute; z-index:1;">
+        <video class="foto cisnes" autoplay muted loop playsinline preload="auto" aria-label="Dos cisnes formando un corazón"></video>
+      </div>
     </div>
 
     <p class="dedicatoria" id="dedicatoria" hidden></p>
 
-    <h2 class="script">Confirmar Asistencia</h2>
-    <p class="aviso">Agradecemos confirmes la<br>asistencia antes del 20 de noviembre.</p>
+    <div style="margin:0 35px; position:relative;">
+      <img src="fondoletra.png" alt="" style="width:100%; display:block;">
+      <div style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:6%;">
+        <img src="fondo2.png" alt="" style="position:absolute; inset:calc(2% - 5px) 2% calc(2% - 5px) 2%; width:96%; height:calc(96% + 10px); object-fit:fill; border-radius:20px; pointer-events:none;">
+        <h2 class="script" style="position:relative;">Confirmar Asistencia</h2>
+        <p class="aviso" style="position:relative;">Agradecemos confirmes la<br>asistencia antes del 15 de noviembre.</p>
 
-    <a class="boton-rsvp" id="rsvp" href="https://wa.me/5216621965822?text=" rel="noopener">Confirmar aquí</a>
+        <a class="boton-rsvp" id="rsvp" href="https://wa.me/5216621965822?text=" rel="noopener" style="position:relative;">Confirmar aquí</a>
 
-    <p class="gracias">¡Muchas gracias!</p>
+        <p class="gracias" style="position:relative;">¡Muchas gracias!</p>
 
-    <p class="aviso" style="margin-top:1.5rem;">
-      Hemos preparado esta celebración para compartir<br>solo entre adultos, agradecemos su comprensión.
-    </p>
+        <p class="aviso" style="margin-top:1.5rem; position:relative;">
+          Hemos preparado esta celebración para compartir<br>solo entre adultos, agradecemos su comprensión.
+        </p>
+      </div>
+    </div>
   </section>
 
 </div>
